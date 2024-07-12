@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Digital Summer School 2024: Tuesday Morning</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <style type="text/css">
+      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+
+      body { font-family: 'Droid Serif'; }
+      h1, h2, h3 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: normal;
+      }
+      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+
+class: center, middle
+
+# CLI & FFmpeg Training
+
+???
+
+Notes for the _first_ slide!
+
+---
+
+# Agenda
+
+1. Introduction to CLI
+2. UNIX on Windows
+3. Born Again SHell (BASH) scripting
+4. Introduction to FFmpeg
+5. FFprobe, FFplay and Filters
+
+---
+# 1: Introduction to the CLI
+      
+.center[<img src="./images/launch_cli.png" width="500">]
+
+???
+
+CLI - Command Line Interface
+- A text only window in a GUI (Graphical User Interface) which is emulating a console  
+- It receives commands from you, which it translates and relates to the computer  
+- The command interpreter makes this translation, and is referred to as a 'shell'. This shell's primary function is to read commands as they are typed into the CLI, translate and execute (or run) them.  
+- Terminal for MacOS and Linux (UNIX systems) use BASH, or Born Again Shell, or ZSH the later Z Shell which is an extended version of BASH.
+- Windows uses Command Shell or PowerShell
+- BFI use SHELL continuously with 'headless' servers which are located in the National Archive but accessed remotely using SSH (Secure Socket Shell protocol) to establish encrypted connections for remote comms between computers. Uses client/server model, keeping transmissions privates. 
+
+---
+# Shortcut to launch Terminal or Windows Command Prompt
+
+![image](https://github.com/digitensions/presentations/tuesday/images/launch_cli.png)
+
+???
+
+Window Command Prompt:
+Click STart
+In search programmes and files, type 'cmd' or 'powershell'
+Hit enter and it will load
+
+MacOS:
+Press Command + spacebar to load search
+Type 'terminal' and it launches
+
+Linux
+Control + ALT + T
+Opens terminal automatically (maybe just Ubuntu)
+
+---
+# CLI commands
+
+![image](https://github.com/digitensions/presentations/tuesday/images/bash_cli_commands.png)
+
+???
+If you have your terminals open, then let’s try some commands. Be careful with mistyping commands, it’s unlikely anything will happen except cause frustration! Any gaps are only one space character, and mostly all commands are lower case. When you create files or folders it is best not to use spaces in your file naming, but instead use underscores for example: folder_1/file_name_like_this.txt
+
+---
+
+# UNIX on Windows
+
+![](https://github.com/digitensions/presentations/tuesday/images/Ubuntu_on_Windows_10_-_bash.png)
+By Canonical, Ltd., Microsoft - Screenshot, GPL, https://commons.wikimedia.org/w/index.php?curid=70653741
+???
+
+If you’re a Windows 10 user you can install an app called Windows Terminal, and this will allow you to access the Windows Subsystem for Linux which comes installed. This will let you have access to some really excellent Linux tools, and there are lots, but also possibly install software only available for Unix systems (ie, Linux and Mac) such as AMIA’s vrecord.
+
+---
+
+# Born Again SHell (BASH) scripting
+
+???
+- I'll be using BASH for our demonstrations today.
+- My installations of FFmpeg and Brew haven't yet been updated for ZSH, so if you are running ZSH you can return it to bash with this command
+
+---
+
+# Introduction to FFmpeg
+
+![](https://github.com/digitensions/presentations/tuesday/images/2021-02-27_-_ffmpeg_version.gif)  
+
+---
+
+# FFprobe, FFplay, and Filters
+
+    </textarea>
+    <script src="https://remarkjs.com/downloads/remark-latest.min.js" type="text/javascript">
+    </script>
+    <script type="text/javascript">
+      var slideshow = remark.create();
+    </script>
+  </body>
+</html>
