@@ -385,14 +385,14 @@ def main():
                 try:
                     shutil.move(fpath, move_path)
                 except Exception:
-                    LOGGER.warning("MOVE FAILURE: %s DID NOT MOVE TO TRANSCODE FOLDER: %s", fpath, move_path)
+                    LOGGER.warning(f"MOVE FAILURE: {fpath} DID NOT MOVE TO TRANSCODE FOLDER: {move_path}")
             else:
-                LOGGER.warning("Problem with file %s: Has media record but no deletion message in global.log", fpath)
+                LOGGER.warning(f"Problem with file {fpath}: Has media record but no deletion message in global.log")
             continue
 
         # Create CID media record only if all BP checks pass and no CID Media record already exists
-        LOGGER.info("No Media record found for file: %s", fname)
-        LOGGER.info("Creating media record and linking via object_number: %s", object_number)
+        LOGGER.info(f"No Media record found for file: {fname}")
+        LOGGER.info(f"Creating media record and linking via object_number: {object_number}")
         media_priref = create_media_record(object_number, duration, byte_size, fname, bucket)
         print(media_priref)
 
