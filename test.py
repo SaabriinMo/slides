@@ -88,10 +88,6 @@ LOG_PATHS = {os.environ['QNAP_VID']: os.environ['L_QNAP01'],
              os.environ['QNAP_07']: os.environ['L_QNAP07'],
              os.environ['QNAP_09']: os.environ['L_QNAP09'],
              os.environ['QNAP_11']: os.environ['L_QNAP11']
-             os.environ['GRACK_FILM']: os.environ['L_GRACK01'],
-             os.environ['QNAP_07']: os.environ['L_QNAP07'],
-             os.environ['QNAP_09']: os.environ['L_QNAP09'],
-             os.environ['QNAP_11']: os.environ['L_QNAP11']
 }
 
 
