@@ -70,7 +70,7 @@ LOGGER.addHandler(HDLR)
 LOGGER.setLevel(logging.INFO)
 
 LOG_PATHS = {os.environ['QNAP_VID']: os.environ['L_QNAP01'],
-             os.environ('QNAP_08']: os.environ['L_QNAP08'],
+             os.environ['QNAP_08']: os.environ['L_QNAP08'],
              os.environ['QNAP_10']: os.environ['L_QNAP10'],
              os.environ['QNAP_H22']: os.environ['L_QNAP02'],
              os.environ['GRACK_H22']: os.environ['L_GRACK02'],
@@ -84,6 +84,10 @@ LOG_PATHS = {os.environ['QNAP_VID']: os.environ['L_QNAP01'],
              os.environ['IS_AUD']: os.environ['L_IS_AUD'],
              os.environ['IS_DIG']: os.environ['L_IS_DIGI'],
              os.environ['GRACK_F47']: os.environ['L_IS_VID'],
+             os.environ['GRACK_FILM']: os.environ['L_GRACK01'],
+             os.environ['QNAP_07']: os.environ['L_QNAP07'],
+             os.environ['QNAP_09']: os.environ['L_QNAP09'],
+             os.environ['QNAP_11']: os.environ['L_QNAP11']
              os.environ['GRACK_FILM']: os.environ['L_GRACK01'],
              os.environ['QNAP_07']: os.environ['L_QNAP07'],
              os.environ['QNAP_09']: os.environ['L_QNAP09'],

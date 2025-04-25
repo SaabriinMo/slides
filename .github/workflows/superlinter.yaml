@@ -1,0 +1,76 @@
+name: Lint and Create Pull Request
+
+on:
+  push:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  lint-and-pr:
+    runs-on: ubuntu-latest
+    steps:
+       - name: Checkout code
+         uses: actions/checkout@v4
+         with:
+            token: ${{ secrets.GITHUB_TOKEN }}
+            fetch-depth: 0
+
+       - name: Install dependencies
+         run: |
+          if [ -f requirements.txt ]; then
+            python -m pip install --upgrade pip
+            python -m pip install -r requirements.txt
+            python -m pip install black isort
+          else
+            echo "requirements.txt not found, skipping dependency installation."
+          fi
+
+       - name: Formatting code
+         run: |
+           python -m black *.py || true
+           python -m isort *.py || true
+
+       - name: Configure Git
+         run: |
+             git config --global user.name "github-actions[bot]"
+             git config --global user.email "github-actions[bot]@users.noreply.github.com"
+         
+       - name: Set branch name
+         id: vars
+         run: echo "branch_name=auto/custom-checks-${{ github.sha }}-${{ github.run_number }}" >> $GITHUB_OUTPUT
+         
+       - name: Commit changes
+         id: commit
+         run: |
+             BRANCH_NAME="${{ steps.vars.outputs.branch_name }}"
+             git checkout -b "$BRANCH_NAME"
+             git add .
+             if git diff --staged --quiet; then
+               echo "No changes to commit"
+               echo "changes_made=false" >> $GITHUB_OUTPUT
+             else
+               git commit -m "chore(${{ github.sha }}-${{ github.run_number }}): automated linting updates"
+               git push -f origin "$BRANCH_NAME"
+               echo "changes_made=true" >> $GITHUB_OUTPUT
+             fi
+
+       - name: Debug information
+         run: |
+           echo "Branch name: ${{ steps.vars.outputs.branch_name }}"
+           echo "Changes made: ${{ steps.commit.outputs.changes_made }}"
+           echo "Current branch: $(git branch --show-current)"
+           git status
+
+       - name: Create Pull Request
+         if: steps.commit.outputs.changes_made == 'true'
+         uses: peter-evans/create-pull-request@v5
+         with:
+            token: ${{ secrets.GITHUB_TOKEN }}
+            commit-message: "chore: automated update"
+            title: "Automated PR: Linting Updates"
+            body: "This PR was created automatically via GitHub Actions."
+            branch: ${{ steps.vars.outputs.branch_name }}
+            draft: true
+            base: main
