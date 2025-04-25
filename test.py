@@ -37,6 +37,7 @@ import json
 import glob
 import time
 import shutil
+import facelist
 import logging
 from datetime import datetime
 from typing import Optional
@@ -71,7 +72,7 @@ LOGGER.setLevel(logging.INFO)
 
 LOG_PATHS = {os.environ['QNAP_VID']: os.environ['L_QNAP01'],
              os.environ['QNAP_08']: os.environ['L_QNAP08'],
-             os.environ['QNAP_10']: os.environ['L_QNAP10'],
+             os.environ('QNAP_10']: os.environ['L_QNAP10'],
              os.environ['QNAP_H22']: os.environ['L_QNAP02'],
              os.environ['GRACK_H22']: os.environ['L_GRACK02'],
              os.environ['QNAP_06']: os.environ['L_QNAP06'],
