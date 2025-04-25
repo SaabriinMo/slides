@@ -108,7 +108,7 @@ def get_buckets(bucket_collection: str) -> str:
     elif bucket_collection == 'amazon':
         for key, value in bucket_data.items():
             if 'amazonblobbing' in key.lower():
-                if value is true:
+                if value is True:
                     key_bucket = key
     elif bucket_collection == 'bfi':
         for key, value in bucket_data.items():
