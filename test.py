@@ -229,11 +229,7 @@ def main():
         autoingest = os.path.join(fullpath, f"{os.environ['BP_INGEST_NETFLIX']}/blobbing/")
         download_folder = os.path.join(autoingest, 'download_check/')
         bucket_collection = 'netflix'
-    elif 'amazon' in str(sys.argv[1]):
-        fullpath = os.environ['PLATFORM_INGEST_PTH']
-        autoingest = os.path.join(fullpath, f"{os.environ['BP_INGEST_AMAZON']}/blobbing/")
-        download_folder = os.path.join(autoingest, 'download_check/')
-        bucket_collection = 'amazon'
+
     else:
         # Just configuring for BFI ingests >1TB at this time
         data_sizes = utils.read_yaml(INGEST_CONFIG)
