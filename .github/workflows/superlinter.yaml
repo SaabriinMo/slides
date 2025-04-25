@@ -29,8 +29,10 @@ jobs:
 
        - name: Formatting code
          run: |
+           python -m pylint *.py || true
            python -m black *.py || true
            python -m isort *.py || true
+           python -m pylint *.py || true
 
        - name: Configure Git
          run: |
@@ -41,20 +43,23 @@ jobs:
          id: vars
          run: echo "branch_name=auto/custom-checks-${{ github.sha }}-${{ github.run_number }}" >> $GITHUB_OUTPUT
          
-       - name: Commit changes
+       - name: Create branch and git add
          id: commit
          run: |
-             BRANCH_NAME="${{ steps.vars.outputs.branch_name }}"
-             git checkout -b "$BRANCH_NAME"
+             git checkout -b "${{ steps.vars.outputs.branch_name }}"
              git add .
              if git diff --staged --quiet; then
                echo "No changes to commit"
                echo "changes_made=false" >> $GITHUB_OUTPUT
              else
-               git commit -m "chore(${{ github.sha }}-${{ github.run_number }}): automated linting updates"
-               git push -f origin "$BRANCH_NAME"
                echo "changes_made=true" >> $GITHUB_OUTPUT
              fi
+
+       - name: commit and push changes
+         run: |
+               BRANCH_NAME="${{ steps.vars.outputs.branch_name }}"
+               git commit -m "chore(formatting-${{ github.sha }}-${{ github.run_number }}): automated linting updates"
+               git push -f origin "$BRANCH_NAME"
 
        - name: Debug information
          run: |
@@ -63,14 +68,17 @@ jobs:
            echo "Current branch: $(git branch --show-current)"
            git status
 
-       - name: Create Pull Request
+       - name: Create Pull Request manually
          if: steps.commit.outputs.changes_made == 'true'
-         uses: peter-evans/create-pull-request@v5
-         with:
-            token: ${{ secrets.GITHUB_TOKEN }}
-            commit-message: "chore: automated update"
-            title: "Automated PR: Linting Updates"
-            body: "This PR was created automatically via GitHub Actions."
-            branch: ${{ steps.vars.outputs.branch_name }}
-            draft: true
-            base: main
+         run: |
+             BRANCH_NAME="${{ steps.vars.outputs.branch_name }}"
+             
+             # Create the PR using GitHub CLI
+             gh pr create \
+               --base main \
+               --head "$BRANCH_NAME" \
+               --title "Automated PR: Code Formatting" \
+               --body "This PR applies automatic code formatting using Black and isort."
+         env:
+             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+         
