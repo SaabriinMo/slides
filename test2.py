@@ -185,6 +185,7 @@ def make_metadata(fpath: str, fname: str, mediainfo_path: str) -> None:
         path4,
         path5,
         path6,
+        path6,
     )
 
 

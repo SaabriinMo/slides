@@ -29,7 +29,6 @@ jobs:
 
        - name: Formatting code
          run: |
-           python -m pylint *.py 
            python -m black *.py 
            python -m isort *.py 
            python -m pylint *.py
