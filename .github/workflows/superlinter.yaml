@@ -20,11 +20,13 @@ jobs:
        - name: Install dependencies
          run: |
           if [ -f requirements.txt ]; then
+            echo "installing from requirments.txt"
             python -m pip install --upgrade pip
             python -m pip install -r requirements.txt
             python -m pip install black isort
           else
-            echo "requirements.txt not found, skipping dependency installation."
+            python -m pip install --upgrade pip
+            python -m pip install pylint pytest pytest-mock black isort
           fi
 
        - name: Formatting code
@@ -82,4 +84,4 @@ jobs:
                --body "This PR applies automatic code formatting using Black and isort."
          env:
              GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-         
+        
