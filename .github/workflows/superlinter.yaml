@@ -20,21 +20,32 @@ jobs:
        - name: Install dependencies
          run: |
           if [ -f requirements.txt ]; then
-            echo "installing from requirments.txt"
             python -m pip install --upgrade pip
             python -m pip install -r requirements.txt
             python -m pip install black isort
           else
-            python -m pip install --upgrade pip
-            python -m pip install pylint pytest pytest-mock black isort
+            echo "requirements.txt not found, skipping dependency installation."
           fi
 
        - name: Formatting code
          run: |
-           python -m pylint *.py || true
-           python -m black *.py || true
-           python -m isort *.py || true
-           python -m pylint *.py || true
+           python -m pylint *.py 
+           python -m black *.py 
+           python -m isort *.py 
+           python -m pylint *.py
+
+       - name: pylint output
+         run: |
+          mkdir -p reports
+          python -m pylint *.py > reports/pylint-report.txt
+
+       - name: Read pylint output into env variable
+         id: read-report
+         run: |
+          body=$(cat reports/pylint-report.txt)
+          echo "BODY<<EOF" >> $GITHUB_OUTPUT
+          echo "$body" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
 
        - name: Configure Git
          run: |
@@ -81,7 +92,12 @@ jobs:
                --base main \
                --head "$BRANCH_NAME" \
                --title "Automated PR: Code Formatting" \
-               --body "This PR applies automatic code formatting using Black and isort."
+               --body "This PR applies automatic code formatting using Black and isort 🧹.
+
+               ${{ steps.read-report.outputs.BODY }}
+
+
+                "
          env:
              GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         
