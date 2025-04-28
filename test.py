@@ -37,7 +37,6 @@ import json
 import glob
 import time
 import shutil
-import facelist
 import logging
 from datetime import datetime
 from typing import Optional
@@ -72,7 +71,7 @@ LOGGER.setLevel(logging.INFO)
 
 LOG_PATHS = {os.environ['QNAP_VID']: os.environ['L_QNAP01'],
              os.environ['QNAP_08']: os.environ['L_QNAP08'],
-             os.environ('QNAP_10']: os.environ['L_QNAP10'],
+             os.environ['QNAP_10']: os.environ['L_QNAP10'],
              os.environ['QNAP_H22']: os.environ['L_QNAP02'],
              os.environ['GRACK_H22']: os.environ['L_GRACK02'],
              os.environ['QNAP_06']: os.environ['L_QNAP06'],
@@ -109,7 +108,7 @@ def get_buckets(bucket_collection: str) -> str:
     elif bucket_collection == 'amazon':
         for key, value in bucket_data.items():
             if 'amazonblobbing' in key.lower():
-                if value is true:
+                if value is True:
                     key_bucket = key
     elif bucket_collection == 'bfi':
         for key, value in bucket_data.items():
@@ -230,11 +229,7 @@ def main():
         autoingest = os.path.join(fullpath, f"{os.environ['BP_INGEST_NETFLIX']}/blobbing/")
         download_folder = os.path.join(autoingest, 'download_check/')
         bucket_collection = 'netflix'
-    elif 'amazon' in str(sys.argv[1]):
-        fullpath = os.environ['PLATFORM_INGEST_PTH']
-        autoingest = os.path.join(fullpath, f"{os.environ['BP_INGEST_AMAZON']}/blobbing/")
-        download_folder = os.path.join(autoingest, 'download_check/')
-        bucket_collection = 'amazon'
+
     else:
         # Just configuring for BFI ingests >1TB at this time
         data_sizes = utils.read_yaml(INGEST_CONFIG)
@@ -390,14 +385,14 @@ def main():
                 try:
                     shutil.move(fpath, move_path)
                 except Exception:
-                    LOGGER.warning("MOVE FAILURE: %s DID NOT MOVE TO TRANSCODE FOLDER: %s", fpath, move_path)
+                    LOGGER.warning(f"MOVE FAILURE: {fpath} DID NOT MOVE TO TRANSCODE FOLDER: {move_path}")
             else:
-                LOGGER.warning("Problem with file %s: Has media record but no deletion message in global.log", fpath)
+                LOGGER.warning(f"Problem with file {fpath}: Has media record but no deletion message in global.log")
             continue
 
         # Create CID media record only if all BP checks pass and no CID Media record already exists
-        LOGGER.info("No Media record found for file: %s", fname)
-        LOGGER.info("Creating media record and linking via object_number: %s", object_number)
+        LOGGER.info(f"No Media record found for file: {fname}")
+        LOGGER.info(f"Creating media record and linking via object_number: {object_number}")
         media_priref = create_media_record(object_number, duration, byte_size, fname, bucket)
         print(media_priref)
 
