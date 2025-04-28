@@ -30,14 +30,14 @@ Script VALIDATE actions:
 2024
 """
 
-import os
-import sys
 import csv
-import json
 import glob
-import time
-import shutil
+import json
 import logging
+import os
+import shutil
+import sys
+import time
 from datetime import datetime
 from typing import Optional
 
