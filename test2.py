@@ -29,7 +29,7 @@ Script VALIDATE actions:
 
 2024
 """
-c
+
 import csv
 import glob
 import json
