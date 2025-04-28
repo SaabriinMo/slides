@@ -166,7 +166,7 @@ def make_metadata(fpath: str, fname: str, mediainfo_path: str) -> None:
 
 def get_md5(filename: str) -> Optional[str]:
     '''
-    Retrieve the local_md5 from checksum_md5 folder
+    Retrieve the local_md5 from checksum_md5 folder.......
     '''
     file_match = [fn for fn in glob.glob(os.path.join(LOG_PATH, 'checksum_md5/*')) if filename in str(fn)]
     if not file_match:
